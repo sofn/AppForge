@@ -12,7 +12,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Development
 
-- Main application entry point: `server-admin/src/main/java/com/lesofn/appboot/server/admin/Application.java`
+- Main application entry point: `server-admin/src/main/java/com/lesofn/appforge/server/admin/Application.java`
 - Default ports: Application (8080), Management (7002)
 - Development profile uses H2 database with console at `/h2-console`
 - Hot reload enabled via Spring Boot devtools

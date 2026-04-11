@@ -3,7 +3,7 @@ plugins {
     `maven-publish`
 }
 
-group = "com.lesofn.appboot"
+group = "com.lesofn.appforge"
 version = "0.1.SNAPSHOT"
 
 // 配置平台，允许定义依赖约束
@@ -85,7 +85,7 @@ publishing {
     publications {
         create<MavenPublication>("bom") {
             from(components["javaPlatform"])
-            artifactId = "appboot-dependencies"
+            artifactId = "appforge-dependencies"
         }
     }
 }

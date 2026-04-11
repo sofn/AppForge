@@ -1,4 +1,4 @@
-group = "com.lesofn.appboot"
+group = "com.lesofn.appforge"
 version = "0.1.SNAPSHOT"
 
 allprojects {
