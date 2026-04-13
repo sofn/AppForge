@@ -2,10 +2,14 @@ package com.lesofn.appforge.server.admin.config;
 
 import jakarta.annotation.PreDestroy;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Bean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.boot.data.redis.autoconfigure.DataRedisProperties;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
+import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.utility.DockerImageName;
 
@@ -25,8 +29,10 @@ public class InitRedisMockServer {
     private static final String REDIS_IMAGE = "redis:7-alpine";
 
     private GenericContainer<?> redisContainer;
+    private String redisHost;
+    private Integer redisPort;
 
-    public InitRedisMockServer(DataRedisProperties redisProperties) {
+    public InitRedisMockServer() {
         try {
             log.info("Starting Redis container via Testcontainers...");
             redisContainer =
@@ -34,17 +40,21 @@ public class InitRedisMockServer {
                             .withExposedPorts(REDIS_PORT);
             redisContainer.start();
 
-            Integer mappedPort = redisContainer.getMappedPort(REDIS_PORT);
-            String host = redisContainer.getHost();
-            log.info("Redis container started at {}:{}", host, mappedPort);
-
-            // 动态覆盖 Spring Data Redis 配置
-            redisProperties.setHost(host);
-            redisProperties.setPort(mappedPort);
+            redisPort = redisContainer.getMappedPort(REDIS_PORT);
+            redisHost = redisContainer.getHost();
+            log.info("Redis container started at {}:{}", redisHost, redisPort);
         } catch (Exception e) {
             log.error("Failed to start Redis container", e);
             throw new RuntimeException("Failed to start Redis container", e);
         }
+    }
+
+    @Bean
+    @Primary
+    public RedisConnectionFactory redisConnectionFactory() {
+        RedisStandaloneConfiguration configuration =
+                new RedisStandaloneConfiguration(redisHost, redisPort);
+        return new LettuceConnectionFactory(configuration);
     }
 
     @PreDestroy
