@@ -119,7 +119,9 @@
         <Logger name="io.lettuce" level="INFO"/>
         <Logger name="io.netty" level="INFO"/>
         <Logger name="com.alibaba" level="WARN"/>
-        <Logger name="com.github.fppt" level="WARN"/>
+        <Logger name="org.testcontainers" level="INFO"/>
+        <Logger name="tc" level="INFO"/>
+        <Logger name="com.github.dockerjava" level="WARN"/>
         <Logger name="sun.rmi" level="WARN"/>
         <Logger name="javax.management" level="WARN"/>
         <Logger name="org.jboss" level="WARN"/>

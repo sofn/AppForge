@@ -55,8 +55,8 @@ dependencies {
     // Redis
     api("org.springframework.boot:spring-boot-starter-data-redis")
     
-    // Redis Mock for Dev environment
-    api("com.github.fppt:jedis-mock")
+    // Testcontainers Redis for Dev environment
+    api("org.testcontainers:testcontainers")
     
     // Spring Boot DevTools - 开发环境自动重启和热部署
     developmentOnly("org.springframework.boot:spring-boot-devtools:4.0.5")
